@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +11,10 @@ public class SummaryActivity extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "NAME";
     public static final String EXTRA_EMAIL = "EMAIL";
+    public static final String EXTRA_NUMBER = "NUMBER";
 
     TextView tvName, tvEmail;
+    Button btnConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,7 @@ public class SummaryActivity extends AppCompatActivity {
 
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
+        btnConfirm = findViewById(R.id.btnConfirm);
 
         Intent intent = getIntent();
 
@@ -28,5 +32,16 @@ public class SummaryActivity extends AppCompatActivity {
 
         tvName.setText("Imię: " + name);
         tvEmail.setText("Email: " + email);
+
+        btnConfirm.setOnClickListener(v -> {
+
+            Intent result = new Intent();
+
+            result.putExtra(EXTRA_NUMBER, "ZG/4821");
+
+            setResult(RESULT_OK, result);
+
+            finish();
+        });
     }
 }
