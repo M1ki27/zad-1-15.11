@@ -15,6 +15,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     TextView tvName, tvEmail;
     Button btnConfirm;
+    Button btnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class SummaryActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         btnConfirm = findViewById(R.id.btnConfirm);
 
+        btnShare = findViewById(R.id.btnShare);
+
         Intent intent = getIntent();
 
         String name = intent.getStringExtra(EXTRA_NAME);
@@ -32,6 +35,23 @@ public class SummaryActivity extends AppCompatActivity {
 
         tvName.setText("Imię: " + name);
         tvEmail.setText("Email: " + email);
+
+        btnShare.setOnClickListener(v -> {
+            String summary = "Podsumowanie zgłoszenia:\n"
+                    + "Imię: " + name + "\n"
+                    + "Email: " + email;
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, summary);
+
+            Intent chooser = Intent.createChooser(
+                    shareIntent,
+                    "Udostępnij podsumowanie"
+            );
+
+            startActivity(chooser);
+        });
 
         btnConfirm.setOnClickListener(v -> {
 
